@@ -4,7 +4,7 @@
   "description": "",
   "keywords": [],
   "main": "src/index.js",
-  "homepage": "https://ahmadkheder.github.io/ahmadkheder-401-advanced-javascript/todo/",
+  "homepage": "https://ahmadkheder-401-advanced-javascript.github.io/todo/",
   "dependencies": {
     "bootstrap": "^4.5.3",
     "gh-pages": "^3.1.0",
