@@ -1,26 +1,27 @@
+/* eslint-disable no-unused-vars */
 import React, {useState, useEffect }from 'react';
 
 import {Form, Button } from 'react-bootstrap';
 
 export default function TodoForm(props){
 
-    const [item , setItem] = useState({});
+  const [item , setItem] = useState({});
 
 
-    const handleInputChange = (event)=>{
-        setItem({...item, 
-            [event.target.name]:event.target.value})
-    }
-    const handleSubmit = (e)=>{
-        e.preventDefault();
-        e.target.reset();
-        props.handleSubmit(item);
-        setItem({});
-        }
-    return(
-        <>
-        <h3>Add Item</h3>
-      <Form  onSubmit={handleSubmit}>
+  const handleInputChange = (event)=>{
+    setItem({...item,
+      [event.target.name]:event.target.value});
+  };
+  const handleSubmit = (e)=>{
+    e.preventDefault();
+    e.target.reset();
+    props.handleSubmit(item);
+    setItem({});
+  };
+  return(
+    <>
+      <h3>Add Item</h3>
+      <Form onSubmit={handleSubmit}>
         <Form.Label>
           <span>To Do Item</span>
           <Form.Control
@@ -39,8 +40,8 @@ export default function TodoForm(props){
         </Form.Label>
         <Button type="submit" >Add Item</Button>
       </Form>
-        
-      </>
 
-    )
+    </>
+
+  );
 }
