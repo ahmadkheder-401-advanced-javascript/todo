@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
@@ -15,7 +16,7 @@ test('should render to do list with the added item', async (done) => {
 
   render (<ToDoList list={list} />);
 
-//   screen.debug();
+  //   screen.debug();
 
   const count = screen.getAllByRole('button');
   // console.log('888',count);
