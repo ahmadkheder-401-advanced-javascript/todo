@@ -4,8 +4,10 @@
   "description": "",
   "keywords": [],
   "main": "src/index.js",
+  "homepage": "https://ahmadkheder.github.io/ahmadkheder-401-advanced-javascript/todo/",
   "dependencies": {
     "bootstrap": "^4.5.3",
+    "gh-pages": "^3.1.0",
     "node-sass": "^4.14.1",
     "react": "16.13.1",
     "react-bootstrap": "^1.3.0",
@@ -23,6 +25,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
+    "predeploy":"npm run build",
+    "deploy":"ghpages -d build",
     "lint": "eslint '**/*.js'",
     "fix": "eslint './**/*.js' --ignore-pattern node_modules/ --fix"
   },
