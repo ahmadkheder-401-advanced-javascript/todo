@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
-// eslint-disable-next-line no-unused-vars
-import ToDo from './components/todo/todo.js';
+
+import ToDo from './components/todo/todo';
 
 export default class App extends React.Component {
   render() {
