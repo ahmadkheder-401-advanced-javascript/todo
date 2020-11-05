@@ -1,50 +1,35 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import Header from './components/header/header';
-import ToDo from './components/todo/todo-connected';
-import SiteContext from './context/settings/context';
 
-import Auth from './context/auth/auth';
-import Login from './context/auth/login';
-import AuthContext from './context/auth/context';
+import ToDo from './components/todo/todo';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Header from './components/todo/header';
+import Settings from './components/todo/settings';
+import Login from './auth/login.js';
+import AuthContext from './auth/context.js';
+import Auth from './auth/auth.js';
 
-const DeleteLink = (props) => {
-  return (
-    <Auth action='delete'>
-      <SiteContext>
-        <ToDo />
-      </SiteContext>
-    </Auth>
-  );
-};
-
-const ReadLink = (props) => {
-  return (
-    <Auth action='read'>
-      <span>Fake Read Link </span>
-    </Auth>
-  );
-};
-
-const EditLink = (props) => {
-  return (
-    <Auth action='edit'>
-      <span>Fake Edit Link </span>
-    </Auth>
-  );
-};
-const App = () => {
-  return (
-    <>
-      <AuthContext>
-        <Header />
-        <hr />
-        <DeleteLink />
-        <ReadLink />
-        <EditLink />
-      </AuthContext>
-    </>
-  );
-};
-
-export default App;
+export default class App extends React.Component {
+  render() {
+    return (
+      <>
+        <BrowserRouter>
+          <AuthContext>
+            <Header />
+            <Login />
+            <Switch>
+              <Route exact path="/todo">
+                <ToDo />
+              </Route>
+              <Route exact path="/settings" >
+                <Auth action="read">
+                  <Settings />
+                </Auth>
+              </Route>
+            </Switch>
+          </AuthContext>
+        </BrowserRouter>
+      </>
+    );
+  }
+}

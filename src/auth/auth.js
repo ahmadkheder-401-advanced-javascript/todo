@@ -4,28 +4,15 @@ import { AuthContext } from './context.js';
 import Show from '../show/show';
 
 class Auth extends React.Component {
-    static contextType = AuthContext; // access it with this.context
-
-    // admin ['edit', 'delete', 'read']
-    // <Auth action="delete">
-    //     <button>Delete</button>
-    //     <div>asdasd asdas children </div>
-    // </Auth>
+    static contextType = AuthContext;
     render() {
 
       let okToRender = false;
-
       try {
-
-        // 1- is the user logged in ?
-        // 2 - do u require certain action? does the have it
-
         okToRender = this.context.loggedIn && this.context.isValidAction(this.props.action);
-
-      } catch(e) {
-        console.log('error in Auth component !');
+      } catch (e) {
+        console.log(e);
       }
-
       return (
         <Show condition={okToRender}>
           {this.props.children}
@@ -33,6 +20,4 @@ class Auth extends React.Component {
       );
     }
 }
-
-
 export default Auth;

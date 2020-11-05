@@ -5,7 +5,7 @@ import cookie from 'react-cookies';
 
 export const AuthContext = React.createContext();
 
-const API = 'https://todoapi-ahmad.herokuapp.com/api/v1/user';
+const API = 'https://api-js401.herokuapp.com';
 
 class AuthProvider extends React.Component {
 
@@ -15,6 +15,7 @@ class AuthProvider extends React.Component {
       loggedIn: false,
       login: this.login,
       logout: this.logout,
+      signup: this.signup,
       user: {},
       isValidAction: this.isValidAction,
     };
@@ -22,16 +23,13 @@ class AuthProvider extends React.Component {
   }
 
     isValidAction = (action) => {
-      const actions = {
-        admin: ['edit', 'delete', 'read'],
-        user: ['read'],
-        editor: ['edit', 'read'],
-      };
 
-      const role = this.state.user.role.toLowerCase();
-      console.log('role : ', role);
-      console.log('actions[role].includes(action): ', actions[role].includes(action));
-      return actions[role].includes(action);
+      console.log(' this.state.user.capabilities', this.state.user.capabilities, action);
+
+      const role = this.state.user.capabilities;
+      console.log(' role.includes(action)', role.includes(action));
+      console.log(' role', role);
+      return role.includes(action);
 
     }
 
@@ -50,29 +48,43 @@ class AuthProvider extends React.Component {
         console.log('res: ', res);
         // res has token {token: token, user: user};
         this.validateToken(res.token);
-
       } catch (e) {
         console.log('error : ', e);
       }
     }
+    signup = async (username, password, role) => {
+      try {
+        var myHeaders = new Headers();
+        myHeaders.append('Content-Type', 'application/json');
+        var raw = JSON.stringify({ 'username': username, 'password': password, 'role': role });
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow',
+        };
 
+        const result = await fetch(`${API}/signup`, requestOptions);
+        let res = await result.json();
+        console.log('res: ', res);
+        this.validateToken(res.token);
+
+      } catch (e) {
+        alert('error : ', e);
+      }
+    }
     validateToken = (token) => {
-      // validate token using jwt
-      // we can use jwt.verify against secret-> .env
-      console.log('token >>> ', token);
-      let user = jwt.decode(token); // from docs its not very recommended .
-      console.log('user >>>> ', user);
-      // // jwt lets try without secret.
-      // // get user object
-      if (user) {
-        this.setAuthState(true, token, user); // to set cookie and update state.
+
+      let decodedToken = jwt.decode(token);
+
+      if (decodedToken) {
+        this.setAuthState(true, token, decodedToken);
       }
     }
 
     setAuthState = (loggedIn, token, user) => {
       console.log('here ');
-      cookie.save('auth', token); // save token as a cookie in browser
-      //update conext with user object
+      cookie.save('auth', token);
       this.setState({ loggedIn, user });
     }
 
@@ -82,7 +94,6 @@ class AuthProvider extends React.Component {
 
 
     componentDidMount() {
-      // get the cookie -> validate cookie -> of valid -> update the state
       const cookieToken = cookie.load('auth');
       const token = cookieToken || null;
       this.validateToken(token);
