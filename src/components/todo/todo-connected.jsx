@@ -9,6 +9,7 @@ import Badge from 'react-bootstrap/Badge';
 import Spinner from 'react-bootstrap/Spinner';
 import './todo.scss';
 import useAjax from '../../hooks/useAjax';
+import Auth from '../../auth/auth';
 
 const todoAPI = 'https://api-js401.herokuapp.com/api/v1/todo';
 
@@ -19,7 +20,6 @@ const ToDo = () => {
 
   return (
     <>
-
       <Container>
         <Row>
           <Col>
@@ -42,7 +42,9 @@ const ToDo = () => {
           </Row>
           <Row className='pl-3 pr-3'>
             <Col md={4} className='p-sm-0'>
-              <TodoForm handleSubmit={addItem} />
+              <Auth action='create'>
+                <TodoForm handleSubmit={addItem} />
+              </Auth>
             </Col>
             <Col md={8} className='justify-content-center p-sm-0 pl-md-5'>
               <TodoList
@@ -59,5 +61,4 @@ const ToDo = () => {
     </>
   );
 };
-
 export default ToDo;
